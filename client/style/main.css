@@ -1,0 +1,294 @@
+html { 
+  padding: 50px;
+  background-color: #000;
+  color: #fff;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.container{
+  width: 100%;
+  height: calc(100vh - 120px);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.title, .data {
+  display: inline-block;
+  font-size: 35px;
+}
+
+.title {
+  width:160px;
+  font-weight:bold;
+}
+
+.image-container,
+.image-container img  {
+  text-align: right;
+  height:100%;
+  width:100%;
+}
+
+
+.song-data{
+  margin-bottom: 20px;
+}
+
+.left-pane, .right-pane{
+  vertical-align: top;
+  position: relative;
+  height: 100%;
+  display: inline-block;
+  width: 49%
+}
+
+.bottom-section{
+  position: absolute;
+  width:100%;
+  height:100px;
+  bottom:0;
+}
+
+.song-details-container{
+  vertical-align: top;
+}
+
+.player-controls,
+.volume-controls{
+  display: inline-block;
+}
+
+.player-controls{
+  position: absolute;
+  left: calc(50% - 134px);
+}
+
+.volume-controls {
+  position: absolute;
+  bottom: 10px;
+  right: 5px;
+}
+
+.volume-controls > * {
+  position: relative;
+}
+
+.volume-controls .fa-chevron-up {
+  top: 32px;
+}
+
+.volume-controls .fa-chevron-down {
+  top: 10px;
+}
+
+.volume-text {
+  font-size: 38px;
+  top: 22px;
+  text-align: center;
+  left: -1px;
+}
+
+.player-controls i{
+  margin-right: 10px;
+}
+
+
+progress {
+  width:650px; 
+  height:10px;
+  background-color: #fff !important;
+}
+
+.progress-container{
+ 
+  position: absolute;
+  bottom: 20px;
+  width: calc(100% - 147px);
+}
+
+
+progress {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 20px;
+  border: none;
+  background-color: whitesmoke;
+  border-radius: 3px;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5) inset;
+  /*
+  the background-image appears only in
+  the indeterminate state, being overridden
+  when there's a value in the progress
+  */
+  background-image: url("data:image/svg+xml;base64,PHN2ZyBmaWxsPSdsaWdodGdyYXknIGhlaWdodD0nMjAnIHdpZHRoPSczNScgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJz48cGF0aCBkPSdNMCAyMCBMMTcgMCBIMzUgTDE3IDIwIFonLz48L3N2Zz4=");
+  background-image: linear-gradient(-45deg, transparent 33%, rgba(0, 0, 0, 0.1) 33%, rgba(0, 0, 0, 0.1) 66%, transparent 66%);
+  background-size: 35px 20px;
+  animation-name: animate-indeterminate;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  margin-bottom: 10px;
+  /*
+  for old browsers that does not
+  support the progress element at all
+  */
+}
+progress:before {
+  content: "";
+  line-height: 20px;
+  color: black;
+  text-align: center;
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 20px;
+  border: none;
+  background-color: whitesmoke;
+  border-radius: 3px;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5) inset;
+  /*
+  the background-image appears only in
+  the indeterminate state, being overridden
+  when there's a value in the progress
+  */
+  background-image: url("data:image/svg+xml;base64,PHN2ZyBmaWxsPSdsaWdodGdyYXknIGhlaWdodD0nMjAnIHdpZHRoPSczNScgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJz48cGF0aCBkPSdNMCAyMCBMMTcgMCBIMzUgTDE3IDIwIFonLz48L3N2Zz4=");
+  background-image: linear-gradient(-45deg, transparent 33%, rgba(0, 0, 0, 0.1) 33%, rgba(0, 0, 0, 0.1) 66%, transparent 66%);
+  background-size: 35px 20px;
+  animation-name: animate-indeterminate;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+progress::-webkit-progress-bar, progress::before {
+  /*
+  Webkit supports ::before on the
+  progress, we need to remove it
+  */
+  display: none;
+}
+progress::-ms-fill {
+  animation-name: none;
+}
+progress::-webkit-progress-bar, progress::after {
+  /*
+  this creates an animated overlay on webkit
+  with progress:after styles here applied to
+  ::-webkit-progress-bar will be reset later
+  */
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 20px;
+  border: none;
+  background-color: whitesmoke;
+  border-radius: 3px;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5) inset;
+  /*
+  the background-image appears only in
+  the indeterminate state, being overridden
+  when there's a value in the progress
+  */
+  background-image: url("data:image/svg+xml;base64,PHN2ZyBmaWxsPSdsaWdodGdyYXknIGhlaWdodD0nMjAnIHdpZHRoPSczNScgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJz48cGF0aCBkPSdNMCAyMCBMMTcgMCBIMzUgTDE3IDIwIFonLz48L3N2Zz4=");
+  background-image: linear-gradient(-45deg, transparent 33%, rgba(0, 0, 0, 0.1) 33%, rgba(0, 0, 0, 0.1) 66%, transparent 66%);
+  background-size: 35px 20px;
+  animation-name: animate-indeterminate;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  content: "";
+  position: absolute;
+  top: 0px;
+  background-color: transparent;
+  box-shadow: none;
+}
+progress::-webkit-progress-bar {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 20px;
+  border: none;
+  background-color: whitesmoke;
+  border-radius: 3px;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5) inset;
+  /*
+  the background-image appears only in
+  the indeterminate state, being overridden
+  when there's a value in the progress
+  */
+  background-image: url("data:image/svg+xml;base64,PHN2ZyBmaWxsPSdsaWdodGdyYXknIGhlaWdodD0nMjAnIHdpZHRoPSczNScgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJz48cGF0aCBkPSdNMCAyMCBMMTcgMCBIMzUgTDE3IDIwIFonLz48L3N2Zz4=");
+  background-image: linear-gradient(-45deg, transparent 33%, rgba(0, 0, 0, 0.1) 33%, rgba(0, 0, 0, 0.1) 66%, transparent 66%);
+  background-size: 35px 20px;
+  animation-name: animate-indeterminate;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  background-image: none;
+}
+progress::-moz-progress-bar {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 20px;
+  border: none;
+  background-color: whitesmoke;
+  border-radius: 3px;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5) inset;
+  /*
+  the background-image appears only in
+  the indeterminate state, being overridden
+  when there's a value in the progress
+  */
+  background-image: url("data:image/svg+xml;base64,PHN2ZyBmaWxsPSdsaWdodGdyYXknIGhlaWdodD0nMjAnIHdpZHRoPSczNScgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJz48cGF0aCBkPSdNMCAyMCBMMTcgMCBIMzUgTDE3IDIwIFonLz48L3N2Zz4=");
+  background-image: linear-gradient(-45deg, transparent 33%, rgba(0, 0, 0, 0.1) 33%, rgba(0, 0, 0, 0.1) 66%, transparent 66%);
+  background-size: 35px 20px;
+  animation-name: animate-indeterminate;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+progress[value] {
+  background-image: none;
+  color: gray;
+}
+progress[value]:before {
+  content: attr(value) " / " attr(max);
+}
+progress[value]::-webkit-progress-value {
+  background-color: gray;
+}
+progress[value]::-moz-progress-bar {
+  background-color: gray;
+}
+progress[value]::-ms-fill {
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5) inset;
+  border: none;
+  border-radius: 3px;
+}
+progress[value]::-webkit-progress-bar, progress[value]::after {
+  background-image: none;
+}
+progress[value]::-webkit-progress-value {
+  /*
+  the inner shadow applied to the
+  progress element and the ::-webkit-progress-bar
+  is bellow the ::-webkit-progress-value
+  (in other browsers it's above, so no need to set it again)
+  */
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5) inset;
+  border-radius: 3px;
+}
+
+
+@keyframes animate-indeterminate {
+  from {
+    background-position-x: 0px;
+  }
+  to {
+    background-position-x: 35px;
+  }
+}
