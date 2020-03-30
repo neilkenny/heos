@@ -7,15 +7,12 @@ import { VolumeControlsComponent } from './VolumeControls';
 export class LeftPaneComponent extends Component  {
   render() {
     return (
-      <div class="left-pane">
+      <div className="left-pane">
         <DeviceListComponent></DeviceListComponent>
         <SongDetailsComponent></SongDetailsComponent>
-        <div class="bottom-section">
-          <div class="bottom-controls">
+        <div className="bottom-section">
+          <div className="bottom-controls">
             <PlayerControlsComponent></PlayerControlsComponent>
-            <div class="discover">
-              <button onclick="discoverDevices()">Discover</button>
-            </div>
             <VolumeControlsComponent></VolumeControlsComponent>
           </div>
         </div>

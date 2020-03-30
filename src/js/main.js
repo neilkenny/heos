@@ -1,4 +1,4 @@
-var socket = io();
+
 var progress = document.getElementById('song-progress');
 var max, current, playState, intervalSubscription;
 
