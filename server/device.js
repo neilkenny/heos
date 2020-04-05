@@ -10,6 +10,7 @@ class DeviceMananger {
     this.devices = [];
     this.io = io;
     this.players = [];
+    this.connections = [];
     this.socketConnected = this.socketConnected.bind(this);
     this.discoverDevices = this.discoverDevices.bind(this);
     this.connectToDevice = this.connectToDevice.bind(this);
@@ -19,8 +20,8 @@ class DeviceMananger {
     this.onGetPlayers = this.onGetPlayers.bind(this);
   }
 
-  registerEvents(){
-    this.heosConnection.on({ commandGroup: 'player', command: 'get_players' }, this.onGetPlayers);
+  registerEvents(connection){
+    connection.on({ commandGroup: 'player', command: 'get_players' }, this.onGetPlayers);
   }
 
   /**
@@ -69,18 +70,19 @@ class DeviceMananger {
    * @param {*} connection 
    */
   onConnected(connection, deviceAddress){
-    this.heosConnection = connection;
-    this.heosConnection.write('system', 'register_for_change_events', { enable: 'on' });
-    this.heosConnection.write('system', 'prettify_json_response', { enable: 'on' });
+    this.connections.push(connection);
+    connection.write('system', 'register_for_change_events', { enable: 'on' });
+    connection.write('system', 'prettify_json_response', { enable: 'on' });
     this.socket.emit(events.SUCCESSFUL_CONNECTION, deviceAddress);
-    this.getPlayers();
+    this.getPlayers(connection);
   }
 
   /**
    * get a reference to any players
    */
-  getPlayers(){
-    this.heosConnection.write('player', 'get_players');
+  getPlayers(connection){
+    this.registerEvents(connection);
+    connection.write('player', 'get_players');
   }
 
   // called when we receive a response from players
