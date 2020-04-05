@@ -1,19 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { LeftPaneComponent } from './components/LeftPane';
 import { RightPaneComponent } from './components/RightPane';
 import { SongProgressComponent } from './components/SongProgress';
 import { requestDevices } from './redux/device/deviceActions';
-import { socket } from './socket';
 
 function AppComponent({  devices, requestDevices }) {
-  
-  useEffect(() => {
-    requestDevices();
-  }, []);
 
-  
-    return  (
+  return  (
     <div className="container">
       <LeftPaneComponent></LeftPaneComponent>
       <RightPaneComponent></RightPaneComponent>
