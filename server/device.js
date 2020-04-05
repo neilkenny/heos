@@ -10,7 +10,6 @@ class DeviceMananger {
     this.devices = [];
     this.io = io;
     this.players = [];
-    this.connections = [];
     this.socketConnected = this.socketConnected.bind(this);
     this.discoverDevices = this.discoverDevices.bind(this);
     this.connectToDevice = this.connectToDevice.bind(this);
@@ -70,7 +69,7 @@ class DeviceMananger {
    * @param {*} connection 
    */
   onConnected(connection, deviceAddress){
-    this.connections.push(connection);
+    this.connection = connection;
     connection.write('system', 'register_for_change_events', { enable: 'on' });
     connection.write('system', 'prettify_json_response', { enable: 'on' });
     this.socket.emit(events.SUCCESSFUL_CONNECTION, deviceAddress);
@@ -89,7 +88,7 @@ class DeviceMananger {
   onGetPlayers(event) {
     const me = this;
     event.payload.forEach((playerData) => {
-      me.players.push(new PlayerManager(me.heosConnection, playerData.pid));
+      me.players.push(new PlayerManager(me.connection, playerData.pid));
     })
   };
 }

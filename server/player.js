@@ -9,7 +9,6 @@ class PlayerManager {
     this.registerEvents = this.registerEvents.bind(this);
     this.decreaseVolume = this.decreaseVolume.bind(this);
     this.increaseVolume = this.increaseVolume.bind(this);
-    this.onGetPlayers = this.onGetPlayers.bind(this);
     this.onVolumeChanged = this.onVolumeChanged.bind(this);
     this.onPlayStateChanged = this.onPlayStateChanged.bind(this);
     this.getPlayingNow = this.getPlayingNow.bind(this);
