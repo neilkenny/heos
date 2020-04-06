@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import DeviceListContainer from './DeviceListContainer';
-import { SongDetailsComponent } from './SongDetails';
+import PlayerListContainer from './PlayerListContainer';
+import SongDetailsContainer from './SongDetailsContainer';
 import { PlayerControlsComponent } from './PlayerControls';
 import { VolumeControlsComponent } from './VolumeControls';
 
@@ -8,8 +8,8 @@ export class LeftPaneComponent extends Component  {
   render() {
     return (
       <div className="left-pane">
-        <DeviceListContainer></DeviceListContainer>
-        <SongDetailsComponent></SongDetailsComponent>
+        <PlayerListContainer></PlayerListContainer>
+        <SongDetailsContainer></SongDetailsContainer>
         <div className="bottom-section">
           <div className="bottom-controls">
             <PlayerControlsComponent></PlayerControlsComponent>

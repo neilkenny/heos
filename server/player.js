@@ -1,9 +1,10 @@
-
+var events = require('../src/events');
 
 class PlayerManager {
 
-  constructor(connection, playerId){
-    this.playerId = playerId;
+  constructor(connection, player){
+    this.player = player;
+    this.playerId = this.player.pid;
     this.heosConnection = connection;
 
     this.registerEvents = this.registerEvents.bind(this);
@@ -13,8 +14,14 @@ class PlayerManager {
     this.onPlayStateChanged = this.onPlayStateChanged.bind(this);
     this.getPlayingNow = this.getPlayingNow.bind(this);
     this.getVolume = this.getVolume.bind(this);
+    this.emitTrackUpdate = this.emitTrackUpdate.bind(this);
 
     this.registerEvents();
+  }
+
+  onSocketConnected(socket){
+    this.socket = socket;
+    socket.on(events.GET_NOW_PLAYING, this.getPlayingNow)
   }
 
   registerEvents(){
@@ -36,7 +43,7 @@ class PlayerManager {
 
     // subscribe to the get now playing media event
     this.heosConnection.on({ commandGroup: 'player', command: 'get_now_playing_media' }, ($event) => {
-      currentTrack = $event.payload;
+      me.currentTrack = $event.payload;
       me.emitTrackUpdate($event);
     });
     // subscribe to the player state changed event
@@ -73,18 +80,18 @@ class PlayerManager {
     this.io.emit('volume_changed', volume);
   }
 
-onPlayStateChanged($event) {
+  onPlayStateChanged($event) {
     this.playStatus = $event.heos.message.parsed.state;
-    io.emit('play_state_changed', this.playStatus);
+    this.io.emit('play_state_changed', this.playStatus);
   };
 
   emitProgressUpdate($event) {
-    io.emit('progress_update', $event.heos.message.parsed);
+    this.io.emit('progress_update', $event.heos.message.parsed);
     this.emitTrackUpdate({payload: currentTrack});
   };
 
   emitTrackUpdate(event) {
-    io.emit(events.TRACK_CHANGED, event.payload);
+    this.socket.emit(events.CURRENT_TRACK_DETAILS, event.payload);
   };
 
 }

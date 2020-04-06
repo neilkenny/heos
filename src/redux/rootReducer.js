@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
-import { devicesReducer } from './device/deviceReducers'
+import { playerReducers } from './player/playerReducers';
+import { trackReducers } from './track/trackReducers';
 
 const rootReducer = combineReducers({
-  devices: devicesReducer
+  players: playerReducers,
+  track: trackReducers
 });
 
 export default rootReducer;

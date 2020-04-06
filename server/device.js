@@ -29,11 +29,13 @@ class DeviceMananger {
   socketConnected(socket) {
     this.socket = socket;
     
-    socket.on(events.FETCH_DEVICES_REQUEST, () => {
-      socket.emit(events.FETCH_DEVICES_RESPONSE, this.devices);
+    socket.on(events.FETCH_PLAYERS_REQUEST, () => {
+      socket.emit(events.FETCH_PLAYERS_RESPONSE, this.players.map(pm => pm.player));
     });
-  
-    socket.on(events.CONNECT_TO_DEVICE, this.connectToDevice);
+
+    this.players.forEach((pm) => {
+      pm.onSocketConnected(this.socket);
+    })
   }
 
   /**
@@ -45,6 +47,7 @@ class DeviceMananger {
       console.log('Got a response to an m-search.');
       if(!me.devices.find(device => device.address === rinfo.address)){
         me.devices.push(rinfo);
+        me.connectToDevice(rinfo.address);
       }
       
       me.io.emit(events.NEW_DEVICE_DISCOVERED, rinfo);
@@ -72,7 +75,6 @@ class DeviceMananger {
     this.connection = connection;
     connection.write('system', 'register_for_change_events', { enable: 'on' });
     connection.write('system', 'prettify_json_response', { enable: 'on' });
-    this.socket.emit(events.SUCCESSFUL_CONNECTION, deviceAddress);
     this.getPlayers(connection);
   }
 
@@ -88,8 +90,10 @@ class DeviceMananger {
   onGetPlayers(event) {
     const me = this;
     event.payload.forEach((playerData) => {
-      me.players.push(new PlayerManager(me.connection, playerData.pid));
-    })
+      if(!me.players.find((player) => player.player.pid === playerData.pid)){
+        me.players.push(new PlayerManager(me.connection, playerData));
+      }
+    });
   };
 }
 
