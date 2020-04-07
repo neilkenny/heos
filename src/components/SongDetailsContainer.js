@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getNowPlaying } from "../redux/track/trackActions";
+import { getNowPlaying, getCurrentTrackResponse } from "../redux/track/trackActions";
 import events from '../events';
 import { connect } from 'react-redux';
 import { getSocket } from '../socket';

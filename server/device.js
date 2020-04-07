@@ -91,7 +91,7 @@ class DeviceMananger {
     const me = this;
     event.payload.forEach((playerData) => {
       if(!me.players.find((player) => player.player.pid === playerData.pid)){
-        me.players.push(new PlayerManager(me.connection, playerData));
+        me.players.push(new PlayerManager(me.io, me.connection, playerData));
       }
     });
   };

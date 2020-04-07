@@ -9,9 +9,9 @@ class SongDetails extends Component  {
   render() {
     return (
     <div className="song-details-container">
-      <div className="song-data"><div className="title">Track:</div><div className="data" id="track-title">{this.props.title}</div></div>
-      <div className="song-data"><div className="title">Album:</div><div className="data" id="track-album"></div></div>
-      <div className="song-data"><div className="title">Artist:</div><div className="data" id="track-artist"></div></div>
+      <div className="song-data"><div className="title">Track:</div><div className="data" id="track-title">{this.props.song.song}</div></div>
+      <div className="song-data"><div className="title">Album:</div><div className="data" id="track-album">{this.props.song.album}</div></div>
+      <div className="song-data"><div className="title">Artist:</div><div className="data" id="track-artist">{this.props.song.artist}</div></div>
     </div>
     );
   }
