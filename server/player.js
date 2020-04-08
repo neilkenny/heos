@@ -21,9 +21,20 @@ class PlayerManager {
   }
 
   onSocketConnected(socket){
+    const me = this;
     this.socket = socket;
+
     socket.on(events.GET_NOW_PLAYING, () => {
       socket.emit(events.CURRENT_TRACK_DETAILS, this.currentTrack);
+    });
+
+    socket.on(events.PLAY_STATE_REQUEST, () => {
+      socket.emit(events.PLAY_STATE_RESPONSE, this.playState);
+    });
+
+    socket.on(events.TOGGLE_PLAY_PAUSE, () => {
+      const newState = me.playState === 'play' ? 'pause' : 'play';
+      me.heosConnection.write('player', 'set_play_state', { pid: me.playerId, state: newState});
     });
   }
 
@@ -64,7 +75,7 @@ class PlayerManager {
 
   onPlayStateChanged($event) {
     this.playState = $event.heos.message.parsed.state;
-    this.io.emit('play_state_changed', this.playState);
+    this.io.emit(events.PLAY_STATE_CHANGED, this.playState);
   };
 
   emitProgressUpdate($event) {

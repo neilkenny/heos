@@ -11,8 +11,9 @@ class SongProgressContainer extends Component  {
   constructor(props){
     super(props);
     this.onSongProgressUpdated = this.onSongProgressUpdated.bind(this);
+    
 
-    socket.on(events.PROGRESS_UPDATE, this.onSongProgressUpdated)
+    socket.on(events.PROGRESS_UPDATE, this.onSongProgressUpdated);
   }
 
   render() {
@@ -23,6 +24,15 @@ class SongProgressContainer extends Component  {
     );
   }
 
+  componentDidUpdate(){
+    if(this.props.playState == 'play'){
+
+    }
+    else{
+
+    }
+  }
+
   onSongProgressUpdated(event){
     console.log(event);
     this.props.updateProgress(event);
@@ -31,7 +41,8 @@ class SongProgressContainer extends Component  {
 
 const mapStateToProps = (state) => {
   return {
-    progress: state.progress.progress
+    progress: state.progress.progress,
+    playState: state.playState.state
   }
 }
 

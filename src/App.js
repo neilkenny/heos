@@ -1,7 +1,7 @@
 import React from 'react';
 import { LeftPaneComponent } from './components/LeftPane';
 import { RightPaneComponent } from './components/RightPane';
-import SongProgressContainer from './components/SongProgress';
+import SongProgressContainer from './components/SongProgressContainer';
 
 function AppComponent({  devices, requestDevices }) {
 

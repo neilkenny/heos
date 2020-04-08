@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PlayerListContainer from './PlayerListContainer';
 import SongDetailsContainer from './SongDetailsContainer';
-import { PlayerControlsComponent } from './PlayerControls';
+import PlayerControlsContainer from './PlayerControlsContainer';
 import { VolumeControlsComponent } from './VolumeControls';
 
 export class LeftPaneComponent extends Component  {
@@ -12,7 +12,7 @@ export class LeftPaneComponent extends Component  {
         <SongDetailsContainer></SongDetailsContainer>
         <div className="bottom-section">
           <div className="bottom-controls">
-            <PlayerControlsComponent></PlayerControlsComponent>
+            <PlayerControlsContainer></PlayerControlsContainer>
             <VolumeControlsComponent></VolumeControlsComponent>
           </div>
         </div>

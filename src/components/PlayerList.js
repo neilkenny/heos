@@ -13,7 +13,7 @@ export class PlayerList extends Component {
   render(){
     return !this.props.players.length ? <div>Searching for HEOS devices...</div> : (
       <div>
-        {this.props.players.map((player) => <p key={player.address}>{player.name} - {player.model} ({player.ip})</p>)}
+        {this.props.players.map((player) => <p key={player.ip}>{player.name} - {player.model} ({player.ip})</p>)}
       </div>
     );
   }
