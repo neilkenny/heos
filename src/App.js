@@ -1,9 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { LeftPaneComponent } from './components/LeftPane';
 import { RightPaneComponent } from './components/RightPane';
-import { SongProgressComponent } from './components/SongProgress';
-import { requestDevices } from './redux/player/playerActions';
+import SongProgressContainer from './components/SongProgress';
 
 function AppComponent({  devices, requestDevices }) {
 
@@ -11,7 +9,7 @@ function AppComponent({  devices, requestDevices }) {
     <div className="container">
       <LeftPaneComponent></LeftPaneComponent>
       <RightPaneComponent></RightPaneComponent>
-      <SongProgressComponent></SongProgressComponent>
+      <SongProgressContainer></SongProgressContainer>
     </div>
 
     )

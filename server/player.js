@@ -68,7 +68,7 @@ class PlayerManager {
   };
 
   emitProgressUpdate($event) {
-    this.io.emit('progress_update', $event.heos.message.parsed);
+    this.io.emit(events.PROGRESS_UPDATE, $event.heos.message.parsed);
   };
 
   emitTrackUpdate() {
