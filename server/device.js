@@ -61,17 +61,14 @@ class DeviceMananger {
   * Connect to a HEOS device using the provided IP address
   */
   connectToDevice(deviceAddress) {
-    heosApi.connect(deviceAddress).then((connection) => this.onConnected(connection, deviceAddress))
-    .catch(error => {
-      console.log(error);
-    });
+    heosApi.connect(deviceAddress).then(this.onConnected).catch(console.log);
   }
 
   /**
    * Called when we establish a connection to a device
    * @param {*} connection 
    */
-  onConnected(connection, deviceAddress){
+  onConnected(connection){
     this.connection = connection;
     connection.write('system', 'register_for_change_events', { enable: 'on' });
     connection.write('system', 'prettify_json_response', { enable: 'on' });
