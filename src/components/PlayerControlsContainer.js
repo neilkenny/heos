@@ -5,7 +5,9 @@ import events from '../events';
 import { 
   playStateResponse, 
   playStateChanged, 
-  togglePlayPause 
+  togglePlayPause,
+  nextTrack,
+  previousTrack
 } from '../redux/playState/playStateActions';
 
 const socket = getSocket();
@@ -17,6 +19,8 @@ constructor(props){
   this.onPlayStateChanged = this.onPlayStateChanged.bind(this);
   this.onPlayStateResponse = this.onPlayStateResponse.bind(this);
   this.togglePlayPause = this.togglePlayPause.bind(this);
+  this.nextTrack = this.nextTrack.bind(this);
+  this.previousTrack = this.previousTrack.bind(this);
 
 
   socket.on(events.PLAY_STATE_RESPONSE, this.onPlayStateResponse);
@@ -51,11 +55,11 @@ constructor(props){
   }
 
   nextTrack = () => {
-
+    this.props.nextTrack();
   }
 
   previousTrack = () => {
-
+    this.props.previousTrack();
   }
 
   togglePlayPause = () => {
@@ -74,7 +78,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     playStateResponse: (playState) => dispatch(playStateResponse(playState)),
     playStateChanged: (playState) => dispatch(playStateChanged(playState)),
-    togglePlayPause: () => dispatch(togglePlayPause())
+    togglePlayPause: () => dispatch(togglePlayPause()),
+    nextTrack: () => dispatch(nextTrack()),
+    previousTrack: () => dispatch(previousTrack()),
   }
 }
 

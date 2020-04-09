@@ -36,6 +36,14 @@ class PlayerManager {
       const newState = me.playState === 'play' ? 'pause' : 'play';
       me.heosConnection.write('player', 'set_play_state', { pid: me.playerId, state: newState});
     });
+
+    socket.on(events.NEXT_TRACK_REQUEST, () => {
+      me.heosConnection.write('player', 'play_next', { pid: me.playerId} );
+    });
+
+    socket.on(events.PREVIOUS_TRACK_REQUEST, () => {
+      me.heosConnection.write('player', 'play_previous', { pid: me.playerId} );
+    });
   }
 
   registerEvents(){
