@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import VolumeSlider from './VolumeSlider';
 
 export class PlayerList extends Component {
   constructor(props){
@@ -13,7 +14,14 @@ export class PlayerList extends Component {
   render(){
     return !this.props.players.length ? <div>Searching for HEOS devices...</div> : (
       <div>
-        {this.props.players.map((player) => <p key={player.ip}>{player.name} - {player.model} ({player.ip})</p>)}
+        {this.props.players.map((player) => {
+          return (
+            <div key={player.ip}>
+              <p>{player.name} - {player.model} ({player.ip})</p>
+              <VolumeSlider currentVolume={player.volume} playerId={player.pid}></VolumeSlider>
+            </div>
+            )})
+        }
       </div>
     );
   }

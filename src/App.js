@@ -3,7 +3,7 @@ import { LeftPaneComponent } from './components/LeftPane';
 import { RightPaneComponent } from './components/RightPane';
 import SongProgressContainer from './components/SongProgressContainer';
 
-function AppComponent({  devices, requestDevices }) {
+function AppComponent() {
 
   return  (
     <div className="container">

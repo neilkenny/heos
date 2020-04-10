@@ -4,13 +4,6 @@ import { GET_NOW_PLAYING_REQUEST, GET_NOW_PLAYING_RESPONSE} from './trackTypes';
 
 const socket = getSocket();
 
-// export const trackChanged = (trackDetails) => {
-//   return {
-//     type: TRACK_CHANGED_EVENT,
-//     trackDetails: trackDetails
-//   }
-// }
-
 export const getNowPlayingRequest = () => {
   return {
     type: GET_NOW_PLAYING_REQUEST

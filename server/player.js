@@ -1,4 +1,5 @@
 var events = require('../src/events');
+const VolumeManager = require('./volume');
 
 class PlayerManager {
 
@@ -18,6 +19,8 @@ class PlayerManager {
     this.registerEvents();
     this.getPlayState();
     this.getPlayingNow();
+
+    this.volumeManager = new VolumeManager(io, connection, this.playerId);
   }
 
   onSocketConnected(socket){
@@ -44,6 +47,8 @@ class PlayerManager {
     socket.on(events.PREVIOUS_TRACK_REQUEST, () => {
       me.heosConnection.write('player', 'play_previous', { pid: me.playerId} );
     });
+
+    this.volumeManager.onSocketConnected(socket);
   }
 
   registerEvents(){

@@ -1,6 +1,17 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { getSocket } from '../socket';
 
-export class VolumeControlsComponent extends Component  {
+const socket = getSocket();
+
+export class VolumeControlsContainer extends Component  {
+
+  constructor(props){
+    super(props);
+
+    
+    
+  }
   render() {
     return (
       <div className="volume-controls">
@@ -19,3 +30,17 @@ export class VolumeControlsComponent extends Component  {
 
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+
+  };
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(VolumeControlsContainer)

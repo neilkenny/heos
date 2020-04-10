@@ -1,4 +1,4 @@
-import { SONG_PROGRESS_UPDATE, PLAY_STATE_RESPONSE, PLAY_STATE_CHANGED } from './progressTypes';
+import { SONG_PROGRESS_UPDATE } from './progressTypes';
 
 const initialState = {
   progress: {}

@@ -1,24 +1,30 @@
-import { FETCH_PLAYERS_REQUEST, FETCH_PLAYERS_RESPONSE } from "./playerTypes";
+import { FETCH_PLAYERS_REQUEST, FETCH_PLAYERS_RESPONSE, PLAYER_VOLUME_CHANGED } from "./playerTypes";
 
-const initialState = {
-  waitingForPlayers: true,
-  players: []
-};
+const initialState = [
+
+];
 
 export const playerReducers = (state = initialState, action) => {
   switch(action.type){
     case FETCH_PLAYERS_REQUEST:
       return {
-        ...state,
-        waitingForPlayers: true
+        ...state
       };
     case FETCH_PLAYERS_RESPONSE:
-      return {
-        ...state,
-        players: action.payload,
-        waitingForPlayers: false
-      };
+      return [
+        ...
+        action.payload
+      ]
+    case PLAYER_VOLUME_CHANGED:
+      const player = state.find((player) => player.pid === action.payload.playerId);
+      state.splice(state.indexOf(player), 1);
 
+      player.volume = action.payload.level;
+      return [
+        ...state, 
+        player
+      ].sort((a, b) => a.name > b.name ? 1 : -1);
+   
     default:
       return state;
   }

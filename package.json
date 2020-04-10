@@ -16,6 +16,8 @@
     "express": "^4.17.1",
     "heos-api": "^4.0.0",
     "node-ssdp": "^4.0.0",
+    "rc-slider": "^9.2.4",
+    "rc-tooltip": "^4.0.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",

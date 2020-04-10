@@ -25,7 +25,7 @@ constructor(props){
 
   socket.on(events.PLAY_STATE_RESPONSE, this.onPlayStateResponse);
   socket.on(events.PLAY_STATE_CHANGED, this.onPlayStateChanged);
-
+  
   this.requestPlayState();
 
 }

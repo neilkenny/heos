@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PlayerList from './PlayerList';
 import { connect } from 'react-redux';
-import { requestDevices, fetchPlayersResponse } from '../redux/player/playerActions';
+import { requestPlayers, fetchPlayersResponse, playerVolumeChanged } from '../redux/player/playerActions';
 import { getSocket } from '../socket';
 import events from '../events';
 
@@ -11,11 +11,15 @@ class PlayerListContainer extends Component {
   constructor(props){
     super(props);
 
+    this.onPlayersReceived = this.onPlayersReceived.bind(this);
+    this.onPlayerVolumeChanged = this.onPlayerVolumeChanged.bind(this);
+    
     socket.on(events.FETCH_PLAYERS_RESPONSE, this.onPlayersReceived);
+    socket.on(events.PLAYER_VOLUME_CHANGED, this.onPlayerVolumeChanged);
   }
 
   componentDidMount(){
-    this.props.requestDevices();
+    this.props.requestPlayers();
   }
 
   render() {
@@ -25,20 +29,25 @@ class PlayerListContainer extends Component {
   onPlayersReceived = (newDeviceList) => {
     this.props.fetchPlayersResponse(newDeviceList);
   }
+
+  onPlayerVolumeChanged(playerId, level) {
+    this.props.playerVolumeChanged(playerId, level);
+  }
 }
 
 
 const mapStateToProps = (state) => {
   return {
-    players: state.players.players
+    players: state.players
   }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch) => {
   
   return {
-    requestDevices: () => dispatch(requestDevices()),
-    fetchPlayersResponse: (deviceList) => dispatch(fetchPlayersResponse(deviceList))
+    requestPlayers: () => dispatch(requestPlayers()),
+    fetchPlayersResponse: (deviceList) => dispatch(fetchPlayersResponse(deviceList)),
+    playerVolumeChanged: (playerId, level) => dispatch(playerVolumeChanged(playerId, level))
   }
 }
 

@@ -30,7 +30,7 @@ class DeviceMananger {
     this.socket = socket;
     
     socket.on(events.FETCH_PLAYERS_REQUEST, () => {
-      socket.emit(events.FETCH_PLAYERS_RESPONSE, this.players.map(pm => pm.player));
+      socket.emit(events.FETCH_PLAYERS_RESPONSE, this.players.map(pm => Object.assign(pm.player, { volume: pm.volumeManager.volume })));
     });
 
     this.players.forEach((pm) => {
