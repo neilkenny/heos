@@ -14,7 +14,7 @@ export class PlayerList extends Component {
   render(){
     return !this.props.players.length ? <div>Searching for HEOS devices...</div> : (
       <div>
-        {this.props.players.map((player) => {
+        {this.props.players.sort((a, b) => a.name > b.name ? 1 : -1).map((player) => {
           return (
             <div key={player.ip}>
               <p>{player.name} - {player.model} ({player.ip})</p>

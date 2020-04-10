@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import 'rc-slider/assets/index.css';
 import 'rc-tooltip/assets/bootstrap.css';
@@ -32,8 +33,18 @@ class VolumeSlider extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  componentDidMount(){
-    this.state = { sliderPosition: this.props.currentVolume }
+  static isMouseDown;
+
+  /**
+   * Update the slider position to match the volume, but not if we
+   * are dragging the slider. This allows us to update the slider when
+   * the volume is changed externally
+   * @param {*} props 
+   */
+  static getDerivedStateFromProps(props){
+    if(!VolumeSlider.isMouseDown){
+      return { sliderPosition: props.currentVolume }  
+    }    
   }
 
   render(){
@@ -44,8 +55,21 @@ class VolumeSlider extends Component {
     )
   }
 
-  componentDidUpdate(props, sdf, sdfd){
-    console.log('PROPUPDATED', props, sdf, sdfd);
+  componentDidMount(){
+    const me = this;
+    this.element = ReactDOM.findDOMNode(this);
+    this.element.addEventListener('mousedown', () => {
+      VolumeSlider.isMouseDown = true;
+    });
+
+    this.element.addEventListener('mouseup', () => {
+      VolumeSlider.isMouseDown = false;
+    });
+    
+  }
+
+  componentDidUpdate(prevProps, prevState){
+
   }
 
   handleChange(level){
