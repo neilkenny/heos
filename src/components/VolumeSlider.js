@@ -5,8 +5,6 @@ import 'rc-slider/assets/index.css';
 import 'rc-tooltip/assets/bootstrap.css';
 import Slider from 'rc-slider';
 import Tooltip from 'rc-tooltip';
-import { setPlayerVolume } from '../redux/player/playerActions';
-
 
 const Handle = Slider.Handle;
 const wrapperStyle = { width: '80%', margin: 10 };
@@ -31,6 +29,7 @@ class VolumeSlider extends Component {
     super(props);
     this.state = {};
     this.handleChange = this.handleChange.bind(this);
+    this.onVolumeChanged = this.onVolumeChanged.bind(this);
   }
 
   static isMouseDown;
@@ -38,7 +37,8 @@ class VolumeSlider extends Component {
   /**
    * Update the slider position to match the volume, but not if we
    * are dragging the slider. This allows us to update the slider when
-   * the volume is changed externally
+   * the volume is changed externally, but also to drag the slider and not
+   * do the volume update until the user lets go of the mouse
    * @param {*} props 
    */
   static getDerivedStateFromProps(props){
@@ -47,16 +47,18 @@ class VolumeSlider extends Component {
     }    
   }
 
+  /**
+   * 
+   */
   render(){
     return (
     <div style={wrapperStyle}>
-      <Slider min={0} max={100} defaultValue={this.props.currentVolume} value={this.state.sliderPosition} handle={handle} onChange={this.handleChange} onAfterChange={(level) => this.props.setVolume(this.props.playerId, level)} />
+      <Slider min={0} max={100} defaultValue={this.props.currentVolume} value={this.state.sliderPosition} handle={handle} onChange={this.handleChange} onAfterChange={this.onVolumeChanged} />
     </div>
     )
   }
 
   componentDidMount(){
-    const me = this;
     this.element = ReactDOM.findDOMNode(this);
     this.element.addEventListener('mousedown', () => {
       VolumeSlider.isMouseDown = true;
@@ -68,12 +70,13 @@ class VolumeSlider extends Component {
     
   }
 
-  componentDidUpdate(prevProps, prevState){
-
+  onVolumeChanged(level){
+    if(this.props.volumeChanged){
+      this.props.volumeChanged(level);
+    }
   }
 
   handleChange(level){
-    console.log(this);
     this.setState({sliderPosition: level});
   }
 }
@@ -82,10 +85,6 @@ const mapStateToProps = (state) => {
   return {};
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setVolume: (playerId, level) => dispatch(setPlayerVolume(playerId, level))
-  };
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(VolumeSlider);
+
+export default connect(mapStateToProps)(VolumeSlider);

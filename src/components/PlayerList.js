@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import VolumeSlider from './VolumeSlider';
+import {connect } from 'react-redux';
+import { setPlayerVolume } from '../redux/player/playerActions';
 
 export class PlayerList extends Component {
   constructor(props){
     super(props);
-    console.log('LOGGING PROPS', this.props);
+    
+    this.onVolumeChanged = this.onVolumeChanged.bind(this);
   }
 
   componentDidUpdate(){
@@ -18,13 +21,23 @@ export class PlayerList extends Component {
           return (
             <div key={player.ip}>
               <p>{player.name} - {player.model} ({player.ip})</p>
-              <VolumeSlider currentVolume={player.volume} playerId={player.pid}></VolumeSlider>
+              <VolumeSlider currentVolume={player.volume} volumeChanged={(level) => this.onVolumeChanged(player.pid, level)}></VolumeSlider>
             </div>
             )})
         }
       </div>
     );
   }
+
+  onVolumeChanged(playerId, level){
+    this.props.setVolume(playerId, level);
+  }
 }
 
-export default PlayerList
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setVolume: (playerId, level) => dispatch(setPlayerVolume(playerId, level))
+  };
+}
+
+export default connect(null, mapDispatchToProps)(PlayerList)
