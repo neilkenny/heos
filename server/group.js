@@ -6,6 +6,8 @@ class GroupManager {
     this.io  = io;
     this.heosConnection = connection;
 
+    this.setGroupVolume = this.setGroupVolume.bind(this);
+
     this.registerEvents();
 
     this.getGroups();
@@ -19,12 +21,9 @@ class GroupManager {
       me.groups.forEach((group) => this.getGroupVolume(group.gid));
     });
 
-    this.heosConnection.on({ commandGroup: 'group', command: 'get_volume' }, (event) => {
-      console.log(event);
-      const groupVolume = event.heos.message.parsed;
-      const group = me.groups.find((group) => group.gid === groupVolume.gid);
-      group.volume = groupVolume.level;
-    });
+    this.heosConnection.on({ commandGroup: 'group', command: 'get_volume' }, this.setGroupVolume);
+
+    this.heosConnection.on({commandGroup: 'event', command: 'group_volume_changed'}, this.setGroupVolume);
   }
 
   onSocketConnection(socket){
@@ -33,6 +32,10 @@ class GroupManager {
     socket.on(events.GET_GROUPS_REQUEST, () => {
       me.socket.emit(events.GET_GROUPS_RESPONSE, this.groups);
     });
+
+    socket.on(events.SET_GROUP_VOLUME, (gid, level) => {
+      me.heosConnection.write('group', 'set_volume', {gid, level} )
+    })
   }
 
   getGroups(){
@@ -41,6 +44,16 @@ class GroupManager {
 
   getGroupVolume(groupId){
     this.heosConnection.write('group', 'get_volume', { gid: groupId });
+  }
+
+  setGroupVolume(event) {
+    const groupVolume = event.heos.message.parsed;
+    const group = this.groups.find((group) => group.gid === groupVolume.gid);
+    group.volume = groupVolume.level;
+    if(groupVolume.level <= 20){
+      this.io.emit(events.GET_GROUPS_RESPONSE, this.groups);
+    }
+    
   }
 
 }

@@ -34,7 +34,9 @@ class DeviceMananger {
       socket.emit(events.GET_PLAYERS_RESPONSE, this.players.map(pm => Object.assign(pm.player, { volume: pm.volumeManager.volume })));
     });
 
-    this.groupManager.onSocketConnection(socket);
+    if(this.groupManager){
+      this.groupManager.onSocketConnection(socket);
+    }
 
     this.players.forEach((pm) => {
       pm.onSocketConnected(this.socket);

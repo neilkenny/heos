@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import VolumeSlider from './VolumeSlider';
+import { setGroupVolume } from  '../redux/group/groupActions';
 
 export class GroupList extends Component {
   constructor(props){
@@ -17,13 +19,23 @@ export class GroupList extends Component {
           return (
             <div key={group.gid}>
               <p>{group.name}</p>
-              {/* <VolumeSlider currentVolume={player.volume} playerId={player.pid}></VolumeSlider> */}
+              <VolumeSlider currentVolume={group.volume} volumeChanged={(level) => this.onGroupVolumeChanged(group.gid, level)}></VolumeSlider> 
             </div>
             )})
         }
       </div>
     );
   }
+
+  onGroupVolumeChanged(groupId, level){
+    this.props.setGroupVolume(groupId, level);
+  }
 }
 
-export default GroupList
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setGroupVolume: (groupId, level) => dispatch(setGroupVolume(groupId, level))
+  }
+}
+
+export default connect(null, mapDispatchToProps)(GroupList);

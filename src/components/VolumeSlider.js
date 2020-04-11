@@ -41,10 +41,12 @@ class VolumeSlider extends Component {
    * do the volume update until the user lets go of the mouse
    * @param {*} props 
    */
-  static getDerivedStateFromProps(props){
+  static getDerivedStateFromProps(props, prevState){
     if(!VolumeSlider.isMouseDown){
       return { sliderPosition: props.currentVolume }  
-    }    
+    }else{
+      return { sliderPosition: prevState.sliderPosition}
+    }
   }
 
   /**
