@@ -1,4 +1,4 @@
-import { FETCH_PLAYERS_REQUEST, FETCH_PLAYERS_RESPONSE, PLAYER_VOLUME_CHANGED } from "./playerTypes";
+import { GET_PLAYERS_REQUEST, GET_PLAYERS_RESPONSE, PLAYER_VOLUME_CHANGED } from "./playerTypes";
 
 const initialState = [
 
@@ -6,11 +6,11 @@ const initialState = [
 
 export const playerReducers = (state = initialState, action) => {
   switch(action.type){
-    case FETCH_PLAYERS_REQUEST:
+    case GET_PLAYERS_REQUEST:
       return {
         ...state
       };
-    case FETCH_PLAYERS_RESPONSE:
+    case GET_PLAYERS_RESPONSE:
       return [
         ...
         action.payload

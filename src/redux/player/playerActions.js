@@ -1,8 +1,8 @@
 import events from '../../events';
 import { getSocket } from '../../socket';
 import { 
-  FETCH_PLAYERS_REQUEST, 
-  FETCH_PLAYERS_RESPONSE, 
+  GET_PLAYERS_REQUEST, 
+  GET_PLAYERS_RESPONSE, 
   SET_PLAYER_VOLUME_REQUEST, 
   PLAYER_VOLUME_CHANGED 
 } from './playerTypes';
@@ -12,14 +12,14 @@ const socket = getSocket();
 
 export const fetchPlayersRequest = () => {
   return {
-    type: FETCH_PLAYERS_REQUEST,
+    type: GET_PLAYERS_REQUEST,
     waitingForPlayers: true
   };
 };
 
 export const fetchPlayersResponse = (device) => {
   return {
-    type: FETCH_PLAYERS_RESPONSE,
+    type: GET_PLAYERS_RESPONSE,
     payload: device
   }  
 };
@@ -42,7 +42,7 @@ export const requestPlayers = () => {
   
   return (dispatch) => {
     dispatch(fetchPlayersRequest());
-    socket.emit(events.FETCH_PLAYERS_REQUEST);
+    socket.emit(events.GET_PLAYERS_REQUEST);
   }
 };
 

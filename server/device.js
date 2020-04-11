@@ -3,6 +3,7 @@ const events = require('../src/events');
 const heosApi = require('heos-api');
 const DenonIdentifier = 'urn:schemas-denon-com:device:ACT-Denon:1';
 const PlayerManager = require('./player');
+const GroupManager = require('./group');
 
 class DeviceMananger {
   
@@ -29,9 +30,11 @@ class DeviceMananger {
   socketConnected(socket) {
     this.socket = socket;
     
-    socket.on(events.FETCH_PLAYERS_REQUEST, () => {
-      socket.emit(events.FETCH_PLAYERS_RESPONSE, this.players.map(pm => Object.assign(pm.player, { volume: pm.volumeManager.volume })));
+    socket.on(events.GET_PLAYERS_REQUEST, () => {
+      socket.emit(events.GET_PLAYERS_RESPONSE, this.players.map(pm => Object.assign(pm.player, { volume: pm.volumeManager.volume })));
     });
+
+    this.groupManager.onSocketConnection(socket);
 
     this.players.forEach((pm) => {
       pm.onSocketConnected(this.socket);
@@ -69,10 +72,15 @@ class DeviceMananger {
    * @param {*} connection 
    */
   onConnected(connection){
-    this.connection = connection;
-    connection.write('system', 'register_for_change_events', { enable: 'on' });
-    connection.write('system', 'prettify_json_response', { enable: 'on' });
-    this.getPlayers(connection);
+    if(!this.connection){
+      this.connection = connection;
+      connection.write('system', 'register_for_change_events', { enable: 'on' });
+      connection.write('system', 'prettify_json_response', { enable: 'on' });
+  
+      this.groupManager = new GroupManager(this.io, connection);
+  
+      this.getPlayers(connection);
+    }
   }
 
   /**

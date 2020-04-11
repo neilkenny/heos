@@ -14,7 +14,7 @@ class PlayerListContainer extends Component {
     this.onPlayersReceived = this.onPlayersReceived.bind(this);
     this.onPlayerVolumeChanged = this.onPlayerVolumeChanged.bind(this);
     
-    socket.on(events.FETCH_PLAYERS_RESPONSE, this.onPlayersReceived);
+    socket.on(events.GET_PLAYERS_RESPONSE, this.onPlayersReceived);
     socket.on(events.PLAYER_VOLUME_CHANGED, this.onPlayerVolumeChanged);
   }
 
