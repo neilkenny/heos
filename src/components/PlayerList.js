@@ -6,12 +6,7 @@ import { setPlayerVolume } from '../redux/player/playerActions';
 export class PlayerList extends Component {
   constructor(props){
     super(props);
-    
     this.onVolumeChanged = this.onVolumeChanged.bind(this);
-  }
-
-  componentDidUpdate(){
-    console.log('PlayerList Updated');
   }
 
   render(){
