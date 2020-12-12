@@ -13,6 +13,9 @@ class GroupManager {
     this.getGroups();
   }
 
+  /**
+   * Register for group events
+   */
   registerEvents(){
     const me = this;
 
@@ -26,6 +29,10 @@ class GroupManager {
     this.heosConnection.on({commandGroup: 'event', command: 'group_volume_changed'}, this.setGroupVolume);
   }
 
+  /**
+   * A socket has been establisted, register socket events
+   * @param {*} socket 
+   */
   onSocketConnection(socket){
     const me = this;
     this.socket = socket;
@@ -38,14 +45,25 @@ class GroupManager {
     })
   }
 
+  /**
+   * get the list of groups
+   */
   getGroups(){
     this.heosConnection.write('group', 'get_groups');
   }
 
+  /**
+   * Get the volume of a group
+   * @param {*} groupId 
+   */
   getGroupVolume(groupId){
     this.heosConnection.write('group', 'get_volume', { gid: groupId });
   }
 
+  /**
+   * Set the volume of a group
+   * @param {*} event 
+   */
   setGroupVolume(event) {
     const groupVolume = event.heos.message.parsed;
     const group = this.groups.find((group) => group.gid === groupVolume.gid);
