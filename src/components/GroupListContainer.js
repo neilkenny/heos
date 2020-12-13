@@ -22,7 +22,9 @@ class GroupListContainer extends Component {
   }
 
   render() {
-    return <GroupList groups={this.props.groups}></GroupList>
+    return (
+    <GroupList groups={this.props.groups}></GroupList>
+    )
   }
 
   onGroupsReceived = (newDeviceList) => {

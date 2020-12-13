@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { connect } from 'react-redux';
 import { getSocket } from '../socket';
 import events from '../events';
 import { songProgressUpdate } from '../redux/progress/progressActions';
-import { VolumeControlsContainer } from './VolumeControlsContainer';
 
 const socket = getSocket();
 
@@ -23,24 +22,22 @@ class SongProgressContainer extends Component  {
 
   static lastRefreshed;
   static lastAccurateUpdate;
+  time;
 
   static getDerivedStateFromProps(props, prevState){
+    const progress = (SongProgressContainer.lastRefreshed != SongProgressContainer.lastAccurateUpdate) ? props.progress.cur_pos : prevState.songPosition;
     if(SongProgressContainer.lastRefreshed != SongProgressContainer.lastAccurateUpdate){
       SongProgressContainer.lastAccurateUpdate = SongProgressContainer.lastRefreshed;
-      return { songPosition: props.progress.cur_pos }
     }
-    else{
-      return { songPosition: prevState.songPosition };
-    }
-    
+    return { songPosition: progress }
   }
 
   render() {
     return (
       <div className="progress-container">
-        {this.state.songPosition}
+        {this.songPositionToTime(this.state.songPosition)}
         <progress id="song-progress" value={this.state.songPosition} max={this.props.progress.duration}></progress>
-        {this.props.progress.duration}
+        {this.songPositionToTime(this.props.progress.duration)}
       </div>
     );
   }
@@ -73,6 +70,14 @@ class SongProgressContainer extends Component  {
     SongProgressContainer.lastRefreshed = new Date();
     console.log(event);
     this.props.updateProgress(event);
+  }
+
+  songPositionToTime(songPos){
+    let minutes, seconds;
+    minutes = (songPos / 60000);
+    seconds = (minutes - Math.floor(minutes)) * 60
+    return `${Math.floor(minutes)}:${seconds < 10 ? '0' : ''}${Math.floor(seconds)}`;
+
   }
 }
 

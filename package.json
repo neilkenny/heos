@@ -13,6 +13,7 @@
   "author": "Neil Kenny",
   "license": "ISC",
   "dependencies": {
+    "bootstrap": "^5.0.0-beta1",
     "express": "^4.17.1",
     "heos-api": "^4.0.0",
     "node-ssdp": "^4.0.0",
