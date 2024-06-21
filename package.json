@@ -13,7 +13,7 @@
   "author": "Neil Kenny",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.19.2",
     "heos-api": "^4.0.0",
     "node-ssdp": "^4.0.0",
     "rc-slider": "^9.6.5",
